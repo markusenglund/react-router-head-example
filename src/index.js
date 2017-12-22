@@ -2,6 +2,25 @@ import React from "react";
 import { render } from "react-dom";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
+const HeadWrapper = () => (
+  <Router>
+    <Route path="/" component={Head} />
+  </Router>
+);
+
+const Head = ({ match }) => {
+  console.log("match", match);
+  return (
+    <>
+      <meta charSet="UTF-8" />
+      <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      {/* <meta name="description" content={headDescription} /> */}
+      <title key="title">react title definitly great</title>
+    </>
+  );
+};
+
 const App = () => (
   <Router>
     <div>
@@ -68,4 +87,5 @@ const Topic = ({ match }) => (
   </div>
 );
 
+render(<HeadWrapper />, document.querySelector("head"));
 render(<App />, document.getElementById("app"));
