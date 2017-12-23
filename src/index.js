@@ -1,48 +1,71 @@
 import React from "react";
 import { render } from "react-dom";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Router, Route, Link } from "react-router-dom";
+import createHistory from "history/createBrowserHistory";
+const history = createHistory();
 
-const HeadWrapper = () => (
-  <Router>
-    <Route path="/" component={Head} />
-  </Router>
-);
-
-const Head = ({ match }) => {
-  console.log("match", match);
-  return (
+const Head = () => (
+  <Router history={history}>
     <>
       <meta charSet="UTF-8" />
       <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      {/* <meta name="description" content={headDescription} /> */}
-      <title key="title">react title definitly great</title>
+      <Route
+        exact
+        path="/"
+        render={() => (
+          <>
+            <meta name="description" content="Home description" />
+            <title>Home page great stuff</title>
+          </>
+        )}
+      />
+      <Route
+        path="/about"
+        render={() => (
+          <>
+            <meta name="description" content="About description" />
+            <title>About page</title>
+          </>
+        )}
+      />
+      <Route
+        path="/topics/:id?"
+        render={({ match }) => (
+          <>
+            <meta name="description" content="Topics description" />
+            <title>
+              {match.params.id ? `Topics - ${match.params.id}` : "Topics"}
+            </title>
+          </>
+        )}
+      />
     </>
-  );
-};
+  </Router>
+);
 
 const App = () => (
-  <Router>
-    <div>
-      <ul>
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-        <li>
-          <Link to="/about">About</Link>
-        </li>
-        <li>
-          <Link to="/topics">Topics</Link>
-        </li>
-      </ul>
-
-      <hr />
-
-      <Route exact path="/" component={Home} />
-      <Route path="/about" component={About} />
-      <Route path="/topics" component={Topics} />
-    </div>
-  </Router>
+  <div>
+    <Router history={history}>
+      <div>
+        <ul>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/about">About</Link>
+          </li>
+          <li>
+            <Link to="/topics">Topics</Link>
+          </li>
+        </ul>
+        <hr />
+        <Route exact path="/" component={Home} />
+        <Route path="/about" component={About} />
+        <Route path="/topics" component={Topics} />
+      </div>
+    </Router>
+  </div>
 );
 
 const Home = () => (
@@ -71,7 +94,6 @@ const Topics = ({ match }) => (
         <Link to={`${match.url}/props-v-state`}>Props v. State</Link>
       </li>
     </ul>
-
     <Route path={`${match.url}/:topicId`} component={Topic} />
     <Route
       exact
@@ -87,5 +109,5 @@ const Topic = ({ match }) => (
   </div>
 );
 
-render(<HeadWrapper />, document.querySelector("head"));
+render(<Head />, document.querySelector("head"));
 render(<App />, document.getElementById("app"));
