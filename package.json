@@ -1,8 +1,8 @@
 {
-  "name": "react-head-example",
+  "name": "react-router-head-example",
   "version": "0.1.0",
-  "description": "An example project to showcase managing the title and description of your head dynamically only using react.",
-  "main": "index.js",
+  "description":
+    "An example project to showcase managing the title and description of your head dynamically as its own React app",
   "scripts": {
     "start": "webpack-dev-server"
   },
